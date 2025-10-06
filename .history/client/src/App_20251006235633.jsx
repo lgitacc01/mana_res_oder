@@ -35,24 +35,24 @@ function App() {
     <Router>
       <ErrorBoundary>
         <div className="container mx-auto p-4">
-          <nav className="mb-6 text-white shadow-lg rounded-lg">
+          <nav className="mb-6 bg-gradient-to-r from-blue-600 to-blue-800 text-white shadow-lg rounded-lg">
             <ul className="flex gap-6 justify-center py-4">
               <li>
                 <Link
                   to="/"
-                  className="px-4 py-2 rounded-md font-semibold text-blue-600 hover:bg-blue-100 transition-colors duration-300"
+                  className="px-4 py-2 rounded-md font-semibold text-white hover:bg-blue-500 transition-colors duration-300"
                 >
                   Menu
                 </Link>
                 <Link
                   to="/booking"
-                  className="px-4 py-2 rounded-md font-semibold text-blue-600 hover:bg-blue-100 transition-colors duration-300"
+                  className="px-4 py-2 rounded-md font-semibold text-white hover:bg-blue-500 transition-colors duration-300"
                 >
                   Đặt bàn
                 </Link>
                 <Link
                   to="/guest"
-                  className="px-4 py-2 rounded-md font-semibold text-blue-600 hover:bg-blue-100 transition-colors duration-300"
+                  className="px-4 py-2 rounded-md font-semibold text-white hover:bg-blue-500 transition-colors duration-300"
                 >
                   Khách Hàng
                 </Link>

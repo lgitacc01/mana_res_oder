@@ -20,18 +20,14 @@ mongoose
   .connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    
   })
   .then(() => console.log('MongoDB connected'))
   .catch((err) => console.log(err));
-//const { seedMenu } = require('./seed/menuSeed');
-//seedMenu();
+
 // Route cơ bản
 app.get('/', (req, res) => {
   res.send('Backend is running');
-  
 });
-
 
 // Route cho menu
 const menuRoutes = require('./routes/menu');

@@ -52,7 +52,7 @@ function MenuList() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-200 to-red-500 flex flex-col items-center py-6">
       <div className="w-full max-w-4xl">
-        <h1 className="text-3xl font-bold text-white mb-4 text-center">Menu</h1>
+        <h1 className="text-3xl font-bold text-white mb-4 text-center">Danh sách Menu</h1>
         {error && <p className="text-red-200 text-center">{error}</p>}
         {isLoading && <p className="text-white text-center">Đang tải...</p>}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-16">

@@ -1,0 +1,47 @@
+import React from 'react';
+import { useState, useEffect } from 'react';
+import api from '../api/axiosConfig';
+import MenuItem from './MenuItem';
+
+function MenuList() {
+  const [menus, setMenus] = useState([]);
+  const [error, setError] = useState('');
+  const [isLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchMenus = async () => {
+      setIsLoading(true);
+      try {
+        const response = await api.get('/api/menu');
+        setMenus(response.data);
+        setError('');
+      } catch (err) {
+        setError('Không thể tải danh sách menu: ' + (err.response?.data?.message || err.message));
+        console.error(err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchMenus();
+  }, []);
+
+  // Sort menus by stt in ascending order
+  const sortedMenus = [...menus].sort((a, b) => a.stt - b.stt);
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-green-200 to-red-500">
+      <div>
+        <h1>Danh sách Menu</h1>
+        {error && <p>{error}</p>}
+        {isLoading && <p>Đang tải...</p>}
+        <div>
+          {sortedMenus.map((menu) => (
+            <MenuItem key={menu._id} menu={menu} />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default MenuList;

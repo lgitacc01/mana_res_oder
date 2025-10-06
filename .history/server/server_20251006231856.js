@@ -24,8 +24,8 @@ mongoose
   })
   .then(() => console.log('MongoDB connected'))
   .catch((err) => console.log(err));
-//const { seedMenu } = require('./seed/menuSeed');
-//seedMenu();
+const { seedMenu } = require('./seed/menuSeed');
+seedMenu()
 // Route cơ bản
 app.get('/', (req, res) => {
   res.send('Backend is running');

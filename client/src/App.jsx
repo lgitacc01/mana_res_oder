@@ -1,6 +1,9 @@
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import MenuList from './components/MenuList';
 import React from 'react';
+import MenuList from './components/MenuList';
+import Booking from './components/Booking';
+import Customer from './components/Customer';
+import BookingList from './components/BookingList';
 
 // Error Boundary Component
 class ErrorBoundary extends React.Component {
@@ -61,6 +64,9 @@ function App() {
           </nav>
           <Routes>
             <Route path="/" element={<MenuList />} />
+            <Route path="/booking" element={<Booking />} />
+            <Route path="/guest" element={<Customer />} />
+            <Route path="/booking-list" element={<BookingList />} />
           </Routes>
         </div>
       </ErrorBoundary>

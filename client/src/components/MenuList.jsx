@@ -8,7 +8,7 @@ function MenuList() {
   const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1); // State cho trang hiện tại
 
-  const itemsPerPage = 9; // 9 món mỗi trang
+  const itemsPerPage = 8; // 8 món mỗi trang
   const totalPages = Math.ceil(menus.length / itemsPerPage); // Tính tổng số trang
 
   useEffect(() => {
@@ -50,42 +50,57 @@ function MenuList() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-green-200 to-red-500 flex flex-col items-center py-6">
-      <div className="w-full max-w-4xl">
-        <h1 className="text-3xl font-bold text-white mb-4 text-center">Menu</h1>
-        {error && <p className="text-red-200 text-center">{error}</p>}
-        {isLoading && <p className="text-white text-center">Đang tải...</p>}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-16">
-          {currentMenus.map((menu) => (
-            <MenuItem key={menu._id} menu={menu} />
-          ))}
+    <div className="min-h-screen bg-gradient-to-br from-yellow-50 via-pink-50 to-blue-50 py-12 flex flex-col items-center">
+      <div className="max-w-6xl w-full bg-white/80 backdrop-blur-md shadow-2xl rounded-3xl p-10 border border-gray-100">
+        <h1 className="text-3xl font-extrabold text-center text-indigo-700 mb-8 drop-shadow-sm">
+          Danh sách món ăn
+        </h1>
+
+        {error && <p className="text-red-600 text-center mb-4">{error}</p>}
+        {isLoading && <p className="text-indigo-600 text-center">Đang tải...</p>}
+
+        {!isLoading && !error && (
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 justify-items-center">
+            {currentMenus.length > 0 ? (
+              currentMenus.map((menu) => <MenuItem key={menu._id} menu={menu} />)
+            ) : (
+              <p className="text-center col-span-full text-gray-600">Không có món ăn nào.</p>
+            )}
+          </div>
+        )}
+      </div>
+
+      {totalPages > 1 && (
+        <div className="mt-8 flex justify-center items-center gap-6">
+          <button
+            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+            disabled={currentPage === 1}
+            className={`px-5 py-2 rounded-lg font-semibold text-white transition ${
+              currentPage === 1
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-indigo-600 hover:bg-indigo-700"
+            }`}
+          >
+            ⬅ Trang trước
+          </button>
+
+          <span className="font-semibold text-gray-700">
+            Trang {currentPage} / {totalPages}
+          </span>
+
+          <button
+            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+            disabled={currentPage === totalPages}
+            className={`px-5 py-2 rounded-lg font-semibold text-white transition ${
+              currentPage === totalPages
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-indigo-600 hover:bg-indigo-700"
+            }`}
+          >
+            Trang sau ➡
+          </button>
         </div>
-      </div>
-      {/* Nút phân trang cố định dưới cùng */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-sm p-4 flex justify-center gap-6">
-        <button
-          onClick={handlePrevPage}
-          disabled={currentPage === 1}
-          className={`px-4 py-2 rounded-lg font-semibold text-white ${
-            currentPage === 1
-              ? 'bg-gray-400 cursor-not-allowed'
-              : 'bg-indigo-600 hover:bg-indigo-700'
-          }`}
-        >
-          Trang trước
-        </button>
-        <button
-          onClick={handleNextPage}
-          disabled={currentPage === totalPages || totalPages === 0}
-          className={`px-4 py-2 rounded-lg font-semibold text-white ${
-            currentPage === totalPages || totalPages === 0
-              ? 'bg-gray-400 cursor-not-allowed'
-              : 'bg-indigo-600 hover:bg-indigo-700'
-          }`}
-        >
-          Trang sau
-        </button>
-      </div>
+      )}
     </div>
   );
 }

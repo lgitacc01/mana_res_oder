@@ -27,7 +27,7 @@ mongoose
 //const { seedMenu } = require('./seed/menuSeed');
 //seedMenu();
 // Route cơ bản
-console.log("hello1")
+console.log("hello1)
 app.get('/', (req, res) => {
   res.send('Backend is running');
   

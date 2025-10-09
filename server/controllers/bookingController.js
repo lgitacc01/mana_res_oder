@@ -85,6 +85,7 @@ exports.getBookingsByCustomer = async (req, res) => {
     const bookings = await Booking.find({ customer: customerId }).sort({ date: -1 });
     res.json(bookings);
   } catch (err) {
+    console.error("❌ Lỗi khi tải lịch sử đặt bàn:", err);
     res.status(500).json({ error: "Không thể tải lịch sử đặt bàn" });
   }
 };

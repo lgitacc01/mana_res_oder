@@ -1,21 +1,12 @@
 import React from 'react';
 
 function MenuItem({ menu }) {
-  const imageSrc =
-    menu.hinh_anh ||
-    `https://source.unsplash.com/400x300/?${encodeURIComponent(menu.ten_mon_an)},food`;
-
   return (
     <div className="bg-white rounded-2xl shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-300 w-[220px] flex flex-col items-center text-center border border-gray-100 overflow-hidden">
       <div className="w-full h-36 bg-gray-100 flex items-center justify-center overflow-hidden">
         <img
-          src={imageSrc}
           alt={menu.ten_mon_an}
           className="w-full h-full object-cover"
-          onError={(e) => {
-            // 🔹 Nếu ảnh không tải được, đổi sang placeholder mặc định
-            e.target.src = '/food-placeholder.jpeg';
-          }}
         />
       </div>
       <div className="p-4 flex flex-col items-center">

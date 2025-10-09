@@ -19,32 +19,58 @@ function Customer() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-6">
-      <h2 className="text-2xl font-bold mb-4 text-blue-700 text-center">
-        Danh sách khách hàng
+    <div className="max-w-5xl mx-auto bg-white shadow-lg rounded-lg p-6">
+      <h2 className="text-3xl font-bold mb-6 text-blue-700 text-center">
+        Danh sách khách hàng & lịch sử đặt bàn
       </h2>
 
       {customers.length === 0 ? (
         <p className="text-center text-gray-500">Chưa có khách hàng nào</p>
       ) : (
-        <table className="w-full border border-gray-200">
-          <thead className="bg-blue-100">
-            <tr>
-              <th className="border px-4 py-2">Tên</th>
-              <th className="border px-4 py-2">SĐT</th>
-              <th className="border px-4 py-2">Email</th>
-            </tr>
-          </thead>
-          <tbody>
-            {customers.map((c) => (
-              <tr key={c._id} className="text-center hover:bg-gray-50">
-                <td className="border px-4 py-2">{c.name}</td>
-                <td className="border px-4 py-2">{c.phone}</td>
-                <td className="border px-4 py-2">{c.email || "—"}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        customers.map((c) => (
+          <div
+            key={c._id}
+            className="mb-8 border border-gray-200 rounded-lg overflow-hidden shadow-sm"
+          >
+            <div className="bg-blue-50 px-4 py-3 flex justify-between items-center">
+              <div>
+                <h3 className="text-lg font-semibold text-blue-800">
+                  {c.name}
+                </h3>
+                <p className="text-sm text-gray-600">
+                  📞 {c.phone} &nbsp; | &nbsp; ✉️ {c.email || "Không có email"}
+                </p>
+              </div>
+            </div>
+
+            {c.bookings && c.bookings.length > 0 ? (
+              <table className="w-full text-sm border-t">
+                <thead className="bg-gray-100">
+                  <tr>
+                    <th className="border px-3 py-2">Ngày</th>
+                    <th className="border px-3 py-2">Giờ</th>
+                    <th className="border px-3 py-2">Số khách</th>
+                    <th className="border px-3 py-2">Ghi chú</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {c.bookings.map((b) => (
+                    <tr key={b._id} className="text-center hover:bg-gray-50">
+                      <td className="border px-3 py-2">{b.date}</td>
+                      <td className="border px-3 py-2">{b.time}</td>
+                      <td className="border px-3 py-2">{b.guests}</td>
+                      <td className="border px-3 py-2">{b.note || "—"}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <p className="text-center py-3 text-gray-500">
+                Chưa có lịch sử đặt bàn
+              </p>
+            )}
+          </div>
+        ))
       )}
     </div>
   );

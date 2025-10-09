@@ -13,27 +13,25 @@ exports.getBookings = async (req, res) => {
 
 // Thêm đặt bàn mới (tự động xử lý khách hàng)
 exports.addBooking = async (req, res) => {
-  try {
+    try {
     const { name, phone, email, date, time, guests, note } = req.body;
 
     if (!name || !phone || !date || !time) {
       return res.status(400).json({ error: "Thiếu thông tin bắt buộc." });
     }
 
-    // 🔍 1. Kiểm tra khách hàng có tồn tại không
+    // 🔍 1. Tìm hoặc tạo khách hàng
     let customer = await Customer.findOne({ phone });
 
-    // 🧩 2. Nếu chưa có, tạo mới khách hàng
     if (!customer) {
-      customer = new Customer({ name, phone, email });
-      await customer.save();
+      customer = await Customer.create({ name, phone, email });
       console.log("🆕 Tạo khách hàng mới:", customer.name);
     } else {
       console.log("✅ Dùng lại khách hàng:", customer.name);
     }
 
-    // 📅 3. Tạo booking mới
-    const newBooking = new Booking({
+    // 📅 2. Tạo booking mới
+    const newBooking = await Booking.create({
       customer: customer._id,
       name,
       phone,
@@ -43,7 +41,10 @@ exports.addBooking = async (req, res) => {
       note,
     });
 
-    await newBooking.save();
+    // 🔗 3. Cập nhật mảng bookings của khách hàng (an toàn hơn .push)
+    await Customer.findByIdAndUpdate(customer._id, {
+      $addToSet: { bookings: newBooking._id } // tránh trùng
+    });
 
     res.status(201).json({
       message: "Đặt bàn thành công!",
@@ -73,5 +74,17 @@ exports.deleteBooking = async (req, res) => {
     res.json({ message: "Xóa đặt bàn thành công" });
   } catch (err) {
     res.status(400).json({ error: err.message });
+  }
+};
+
+
+// Lấy lịch sử đặt bàn của 1 khách hàng
+exports.getBookingsByCustomer = async (req, res) => {
+  try {
+    const { customerId } = req.params;
+    const bookings = await Booking.find({ customer: customerId }).sort({ date: -1 });
+    res.json(bookings);
+  } catch (err) {
+    res.status(500).json({ error: "Không thể tải lịch sử đặt bàn" });
   }
 };

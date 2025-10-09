@@ -86,22 +86,23 @@ npm run dev
 
 ## 🎨 Cấu hình Tailwind (trong client)
 
-`client/tailwind.config.js`
+`client/vite.config.js`
 
 ```js
-export default {
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
-  theme: { extend: {} },
-  plugins: [],
-};
+import { defineConfig } from 'vite'
+import tailwindcss from '@tailwindcss/vite'
+
+export default defineConfig({
+  plugins: [
+    tailwindcss(),
+  ],
+})
 ```
 
 Thêm vào `src/index.css`:
 
 ```css
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 ```
 
 ---
@@ -111,23 +112,25 @@ Thêm vào `src/index.css`:
 `server/eslint.config.js`
 
 ```js
-const js = require('@eslint/js');
-const globals = require('globals');
+// Thay vì "import", dùng "require"
+const js = require("@eslint/js");
+const globals = require("globals");
 
+// Thay vì "export default", dùng "module.exports"
 module.exports = [
   {
-    files: ['**/*.{js,mjs,cjs}'],
+    files: ["**/*.{js,mjs,cjs}"],
     languageOptions: {
-      ecmaVersion: 'latest',
-      sourceType: 'commonjs',
+      ecmaVersion: "latest",
+      sourceType: "commonjs",
       globals: {
         ...globals.browser,
-        ...globals.node,
-      },
+        ...globals.node
+      }
     },
     rules: {
       ...js.configs.recommended.rules,
-    },
+    }
   },
 ];
 ```

@@ -36,12 +36,7 @@ app.get('/', (req, res) => {
 
 // Route cho menu
 const menuRoutes = require('./routes/menu');
-const bookingRoutes = require('./routes/bookingRoutes.js');
-const customerRoutes = require('./routes/customerRoutes.js');
-
 app.use('/api/menu', menuRoutes);
-app.use('/api/bookings', bookingRoutes);
-app.use('/api/customers', customerRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

@@ -8,26 +8,8 @@ dotenv.config();
 const app = express();
 
 // Middleware
-// Danh sách các địa chỉ (origin) được phép truy cập
-const allowedOrigins = [
-  'http://localhost:5173',
-  'http://res-order-bucket.s3-website-ap-southeast-1.amazonaws.com'
-  // Sau này nếu có tên miền riêng, bạn thêm vào đây
-];
-
 app.use(cors({
-  origin: function (origin, callback) {
-    // Nếu request không có origin (ví dụ: dùng Postman, hoặc server-to-server) thì cho phép
-    if (!origin) return callback(null, true);
-    
-    // Nếu origin của request có trong danh sách allowedOrigins thì cho phép
-    if (allowedOrigins.indexOf(origin) !== -1) {
-      return callback(null, true);
-    } else {
-      // Nếu không có trong danh sách, từ chối request
-      return callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: 'http://res-order-bucket.s3-website-ap-southeast-1.amazonaws.com',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type'],
 }));

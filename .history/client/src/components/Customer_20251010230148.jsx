@@ -12,7 +12,7 @@ function Customer() {
 
   const fetchCustomers = async () => {
     try {
-      const res = await api.get("/api/customers"); 
+      const res = await api.get("/api/customerRoutes");
       setCustomers(res.data);
     } catch (err) {
       console.error("Lỗi khi tải khách hàng:", err);

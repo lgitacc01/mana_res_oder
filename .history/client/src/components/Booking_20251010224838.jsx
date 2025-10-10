@@ -24,7 +24,7 @@ function Booking() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await api.post("/api/bookings", formData);
+      const res = await axios.post(axios.api, formData);
       setMessage("✅ " + res.data.message);
       setFormData({
         name: "",

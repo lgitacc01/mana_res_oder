@@ -1,0 +1,35 @@
+# ---- Giai đoạn 1: Build ----
+# Sử dụng một image Node.js đầy đủ để cài đặt dependencies
+FROM node:20-alpine AS builder
+
+# Thiết lập thư mục làm việc trong container
+WORKDIR /app
+
+# Copy package.json và package-lock.json trước
+# Tận dụng cache của Docker, bước này sẽ không chạy lại nếu file không đổi
+COPY package*.json ./
+
+# Cài đặt tất cả dependencies (bao gồm cả devDependencies)
+RUN npm install
+
+# Copy toàn bộ source code còn lại
+COPY . .
+
+# ---- Giai đoạn 2: Production ----
+# Sử dụng một image Node.js gọn nhẹ cho môi trường production
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Copy chỉ những dependencies cần thiết cho production từ giai đoạn 'builder'
+COPY --from=builder /app/node_modules ./node_modules
+
+# Copy source code đã được build
+COPY --from=builder /app .
+
+# Port mà ứng dụng của bạn sẽ chạy bên trong container (ví dụ: 3000 hoặc 8080)
+# Hãy chắc chắn rằng port này khớp với port trong file .env của bạn
+EXPOSE 3000
+
+# Lệnh để khởi chạy ứng dụng, lấy từ "start" script trong package.json
+CMD ["npm", "start"]

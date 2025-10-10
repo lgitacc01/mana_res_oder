@@ -41,7 +41,7 @@ function Booking() {
   };
 
   return (
-  <div className="max-w-7xl mx-auto bg-white shadow-2xl rounded-2xl p-8 mt-6 border border-gray-100 text-gray-800 dark:text-gray">
+  <div className="max-w-7xl mx-auto bg-white shadow-2xl rounded-2xl p-8 mt-6 border border-gray-100 text-gray-800 dark:text-white">
     <div className="flex justify-center gap-4 mb-6">
       <button
         onClick={() => setActiveTab("form")}
